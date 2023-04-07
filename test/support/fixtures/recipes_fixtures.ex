@@ -30,4 +30,24 @@ defmodule Fitculinaire.RecipesFixtures do
 
     aliment
   end
+
+  @doc """
+  Generate a recipe.
+  """
+  def recipe_fixture(attrs \\ %{}) do
+    {:ok, recipe} =
+      attrs
+      |> Enum.into(%{
+        cooking_time: "some cooking_time",
+        description: "some description",
+        instruction: "some instruction",
+        is_private: true,
+        notes: "some notes",
+        preparation_time: "some preparation_time",
+        title: "some title"
+      })
+      |> Fitculinaire.Recipes.create_recipe()
+
+    recipe
+  end
 end
