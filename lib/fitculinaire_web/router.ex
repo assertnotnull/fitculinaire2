@@ -69,7 +69,13 @@ defmodule FitculinaireWeb.Router do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
       live "/app", UserHomeLive, :any
+      live "/recipes/new", RecipeLive.Index, :new
+      live "/recipes/:id/edit", RecipeLive.Index, :edit
+      live "/recipes/:id/show/edit", RecipeLive.Show, :edit
     end
+
+    live "/recipes", RecipeLive.Index, :index
+    live "/recipes/:id", RecipeLive.Show, :show
   end
 
   scope "/", FitculinaireWeb do

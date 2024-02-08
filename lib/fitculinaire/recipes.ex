@@ -197,4 +197,30 @@ defmodule Fitculinaire.Recipes do
   def change_recipe(%Recipe{} = recipe, attrs \\ %{}) do
     Recipe.changeset(recipe, attrs)
   end
+
+  def normalize(%Aliment{} = aliment, quantity) do
+    keys = Map.keys(aliment)
+
+    Enum.map(keys, fn key ->
+      Map.update(aliment, key, 0, fn v -> normalize_value(v, quantity) end)
+    end)
+
+    aliment
+  end
+
+  defp normalize_value(value, quantity) when is_number(value) and is_number(quantity) do
+    case value do
+      0 ->
+        0
+
+      _ ->
+        round(value / quantity * 100)
+    end
+  end
+
+  def convert_and_add(%Aliment{} = aliment) do
+    aliment
+    |> normalize(aliment.quantity)
+    |> create_aliment()
+  end
 end
